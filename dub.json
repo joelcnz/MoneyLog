@@ -1,0 +1,16 @@
+{
+	"name": "moneylog",
+	"authors": [
+		"Joel Christensen"
+	],
+	"sourcePaths" : ["source",
+					"../IniLib/source",
+					"../JMiscLib/source"],
+	"dependencies": {
+		"dlangui": "~>0.9.178",
+		"money": "~>2.2.0"
+	},
+	"description": "Test",
+	"copyright": "Copyright © 2016, Joel Christensen",
+	"license": "proprietary"
+}
