@@ -7,7 +7,10 @@
 		"derelict-util": "3.0.0-beta.2",
 		"dlangui": "0.9.182",
 		"dsfml": "2.1.1",
-		"money": "2.2.0",
+		"fixedpoint": "0.0.5",
+		"gtk-d": "3.9.0",
+		"money": "2.5.0",
+		"unit-threaded": "1.0.0",
 		"x11": "1.0.21"
 	}
 }

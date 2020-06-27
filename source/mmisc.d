@@ -18,7 +18,7 @@ public {
 	alias wf = writefln;
 
 	//Eg. " 0.9+ 0.1 +9.1+   0.9 \n ".getParseMonInputStr.writeln;
-	auto getParseMonInputStr(in dstring input) {
+	auto getParseMonInputStr(in string input) {
 		import money;
 
 		alias NZD = currency!("NZD", 2);
@@ -44,10 +44,10 @@ public {
 
 			writeln("Error with input, returning 0");
 
-			return "0"d;
+			return "0";
 		}
 
-		return total.to!string[0 .. $ - 3].to!dstring; //#remove NZD
+		return total.to!string[0 .. $ - 3].to!string; //#remove NZD
 	}
 
 	//#renamed getline trying to compile on Linux

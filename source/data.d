@@ -6,6 +6,8 @@ import std.string;
 
 import money;
 
+import jmisc;
+
 import mmisc;
 
 final class Data {
@@ -59,6 +61,7 @@ public:
 		} catch(Exception e) {
 			dayOfWeek = "#:#:# Error!";
 		}
+
 		return text("(", index, ") ", dayOfWeek[0].toUpper, dayOfWeek[1 .. $], " ", day, ".", month, ".", year,
 			" $", cost.to!string[0 .. $ - 3], // remove 'NZD'
 			(item == "" ? "" : ", Item: "), item,
@@ -75,11 +78,11 @@ public:
 		comment="";
 	}
 
-	this( int day, int month,int year,
-		string item, bdub cost, string shop, string comment) {
+	this(int day, int month,int year, string item, bdub cost, string shop, string comment) {
 		this.day=day; this.month=month; this.year=year;
 		this.shop=shop;
-		this.item=item.dup; this.cost=cost; 
+		this.item=item.dup;
+		this.cost=cost; 
 		this.comment=comment;
 	}
 	

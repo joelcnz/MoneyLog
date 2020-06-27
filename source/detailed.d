@@ -36,8 +36,9 @@ version(djini) {
 
 import money;
 
-import data;
-import mmisc;
+import jmisc;
+
+import base, data, mmisc;
 
 //#not work with DUB - works by putting in the dub.json file, though.
 //pragma(lib, "readline");
@@ -101,16 +102,15 @@ class DetailedBookKeeping {
 			d.display, writeln;
 	}
 
-	dstring getData() {
+	auto getData() {
+		assert(data.length);
 		string result;
 		foreach(d; data) {
 			result ~= d.toString ~ "\n";
 		}
 		dataTmp = data.dup;
 
-		import std.conv;
-
-		return result.to!dstring;
+		return result;
 	}
 
 	void doAppend() {
@@ -142,23 +142,24 @@ class DetailedBookKeeping {
 		if (end < start || start < 0 || start > data.length - 1 ||
 			end < 0 || end > data.length - 1) {
 
-			return "Out of bounds, try again."d;
+			return "Out of bounds, try again.";
 		}
 		//Display list
-		dstring result;
+		string result;
 
+		_dataTmp.length = 0;
 		foreach(d; data[start .. end + 1]) {
 			_dataTmp ~= d;
-			result ~= d.toString.to!dstring ~ "\n";
+			result ~= d.toString.to!string ~ "\n";
 		}
 
 		return result;
 	}
 
-	auto doSearch(dstring searchText) {
+	auto doSearch(string searchText) {
 		import std.conv;
 
-		dstring result;
+		string result;
 		int itemCount;
 
 		searchText = toLower(searchText);
@@ -180,13 +181,13 @@ class DetailedBookKeeping {
 			+/
 			import std.algorithm: canFind;
 			if (toLower(d.to!string).canFind(searchText)) {
-				result ~= d.toString.to!dstring ~ "\n"d;
+				result ~= d.toString.to!string ~ "\n";
 				itemCount += 1;
 
 				_dataTmp ~= d;
 			}
 		}
-		result ~= text("Item count: ", itemCount).to!dstring;
+		result ~= text("Item count: ", itemCount).to!string;
 		
 		return result;
 	}

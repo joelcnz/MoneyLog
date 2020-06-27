@@ -1,16 +1,14 @@
 {
-	"name": "moneylog",
-	"authors": [
-		"Joel Christensen"
-	],
-	"sourcePaths" : ["source",
-					"../IniLib/source",
-					"../JMiscLib/source"],
 	"dependencies": {
-		"dlangui": "~>0.9.178",
-		"money": "~>2.2.0"
+		"gtk-d": "~>3.9.0",
+		"money": "~>2.5.0",
+		"unit-threaded": "~>1.0.0"
 	},
-	"description": "Test",
-	"copyright": "Copyright © 2016, Joel Christensen",
-	"license": "proprietary"
+	"description": "Home Detailed Book Keeping",
+	"name": "moneylog",
+	"sourcePaths": [
+		"source",
+		"../IniLib/source",
+		"../JMiscLib/source"
+	]
 }

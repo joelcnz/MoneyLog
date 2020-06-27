@@ -16,6 +16,8 @@ import std.conv; // convert
 
 import money;
 
+import jmisc;
+
 import detailed;
 import mmisc;
 import data;
@@ -38,7 +40,9 @@ final static class Account { //#not sure how static works here, and isn't final 
 	int _op; //# eg co 123 (_op being '123')
 	bool saved, done;
 	string _handle;
+
 	public:
+	auto getDBK() { return dbk; }
 	string handle() { return _handle; }
 	string handle(string handle0) { return _handle=handle0; }
 	this( string handle ) {
@@ -72,14 +76,15 @@ final static class Account { //#not sure how static works here, and isn't final 
 		dbk.doSort();
 	}
 
-	auto doSearch(in dstring searchText) {
+	auto doSearch(in string searchText) {
 		return dbk.doSearch(searchText);
 	}
 
 	void saveAccount(immutable string fileName) {
 		import std.file;
 
-		copy(fileName, "back_" ~ fileName); // back up
+		if (fileName.exists)
+			copy(fileName, "back_" ~ fileName); // back up
 		dbk.populate_cfgFile(fileName);
 	}
 
@@ -104,6 +109,7 @@ final static class Account { //#not sure how static works here, and isn't final 
 	}
 
 	auto getData() {
+		assert(dbk);
 		return dbk.getData;
 	}
 
