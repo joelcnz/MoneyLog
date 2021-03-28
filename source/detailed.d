@@ -430,7 +430,7 @@ class DetailedBookKeeping {
 			bool done=false;
 			count = 0;
 			do {
-				sec=format("section%d",i);
+				sec=format!"section%d"(i);
 				with ( tmp ) {
 					version(ini) {
 						if ( ini[sec]["day"] !is null ) {
@@ -488,9 +488,9 @@ class DetailedBookKeeping {
 		foreach(i,d;data) {
 			with( d ) {
 				// not sure about the '\n''s, can't see spacing working either
-				append(filen,format("%dday=%d\n%dmonth=%d\n%dyear=%d" ~ // append?
-						"\n%ditem=%s\n%dcost=%0.2f\n%dshop=%s\n%dcomment=%s\n",
-						i,day,i,month,i,year,
+				append(filen,format!("%dday=%d\n%dmonth=%d\n%dyear=%d" ~ // append?
+						"\n%ditem=%s\n%dcost=%0.2f\n%dshop=%s\n%dcomment=%s\n")
+						(i,day,i,month,i,year,
 						i,item,i,cost,i,shop,i,comment));
 			}
 		}
@@ -527,7 +527,7 @@ class DetailedBookKeeping {
 			/// Now we go and save to the configuration file
 			i=0;
 			foreach(d;data ) {
-				sec=format("section%d",i);
+				sec=format!"section%d"(i);
 				version(ini)
 					ini.addSection(sec);
 //				writefln("[%s]",sec);

@@ -97,8 +97,8 @@ public:
 	}
 
 	string lot() {
-		string date=format("%2d/%02d/%d",day,month,year);
-		string all=format("%-10s (%3d) %-50s %s",date, index, item,cashToString(cost,"   "));
+		string date=format!"%2d/%02d/%d"(day,month,year);
+		string all=format!"%-10s (%3d) %-50s %s"(date, index, item,cashToString(cost,"   "));
 		auto nothing = "";
 
 		if (shop != nothing || comment != nothing)

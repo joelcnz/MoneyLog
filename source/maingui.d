@@ -271,7 +271,7 @@ class LeftPanelBox : VerticalBox {
 		immutable fileName = loginNameEntry.getText ~ ".ini";
 
 		g_World.saveAccount(fileName);
-		backUp(fileName);
+		jm_backUp(fileName);
 		moneyLogUpDateStatus("Saved ", fileName, " - saved the old one as back_", fileName);
     }
 
@@ -403,6 +403,8 @@ class CommandHorizontalBox : HorizontalBox {
 	string commandLabelString = "Command:";
 	Entry commandEntry;
 	string commandEntryPlaceHolder = "(Ctrl + B)";
+	Button processLineButton;
+	string processLineString = "Process";
 	CheckButton appendCheckButton;
 	string appendString = "Append";
 
@@ -410,6 +412,7 @@ class CommandHorizontalBox : HorizontalBox {
 	this() {
 		commandLabel = new Label(commandLabelString);
 		commandEntry = new Entry();
+		processLineButton = new Button(processLineString, &processClick);
 		appendCheckButton = new CheckButton(appendString);
 
 		commandEntry.setPlaceholderText(commandEntryPlaceHolder);
@@ -419,6 +422,7 @@ class CommandHorizontalBox : HorizontalBox {
 		expand = fill = true;
 		packStart(commandEntry, expand, fill, localPadding);
 		expand = fill = false;
+		packStart(processLineButton, expand, fill, localPadding);
 		packStart(appendCheckButton, expand, fill, localPadding);
 
 		commandEntry.addOnActivate(&commandEnterCallBack);
@@ -463,6 +467,44 @@ class CommandHorizontalBox : HorizontalBox {
 
 	auto getCommandEntry() {
 		return commandEntry;
+	}
+
+	void processClick(Button b) {
+		// moneyLogUpDateStatus("Process clicked!");
+		import std.string : split, strip, indexOf;
+		auto raw = commandEntry.getText;
+		auto d = raw.to!(char[]);
+		if (d.indexOf("$") == -1) {
+			moneyLogUpDateStatus("Error (no dollar sign), check data..");
+			return;
+		}
+		d[d.indexOf("$")] = ';';
+		auto data = d.to!string;
+		auto getSegs = data.split(";");
+		if (getSegs.length > 5) {
+			moneyLogUpDateStatus("Error (too many sections - ",getSegs.length , "), check data..");
+			return;
+		}
+
+		string[5] segs;
+		foreach(i, s; getSegs)
+				segs[i] = s.strip;
+		writeln(segs);
+		enum {DATE,COST,SHOP,ITEM,COMMENT}
+		auto getAppBox() {
+			return g_World.getAppBox;
+		}
+		try {
+			getAppBox.getLeftPanelBox.getDateEntry.setText = segs[DATE].length ? segs[DATE] : "";
+			getAppBox.getLeftPanelBox.getShopEntry.setText = segs[SHOP].length ? segs[SHOP] : "";
+			getAppBox.getLeftPanelBox.getCostEntry.setText = segs[COST].length ? segs[COST] : "";
+			getAppBox.getBigRightBox.getItemLabelEntryHorizontalBox.getEntry.setText = segs[ITEM].length ? segs[ITEM] : "";
+			getAppBox.getBigRightBox.getCommentLabelEntryHorizontalBox.getEntry.setText = segs[COMMENT].length ? segs[COMMENT] : "";
+		} catch(Exception e) {
+			moneyLogUpDateStatus("Some error, check the data..");
+			return;
+		}
+		moneyLogUpDateStatus("Processed: ", raw);
 	}
 }
 

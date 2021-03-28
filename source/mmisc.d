@@ -73,8 +73,8 @@ public {
 			amount="1"; // just stuck this in here
 		}
 		else
-			amount=format("%0.2f",money);
+			amount=format!"%0.2f"(money);
 		//#messy
-		return format("%s%s%s", (money>=bdub(1.0) || money<=bdub(-1.0) ? "$" : ""), amount, money>=bdub(0.0) && money<bdub(1.0) ? "c" : "");
+		return format!"%s%s%s"((money>=bdub(1.0) || money<=bdub(-1.0) ? "$" : ""), amount, money>=bdub(0.0) && money<bdub(1.0) ? "c" : "");
 	}
 } // public
